@@ -15,20 +15,21 @@ import org.hibernate.cfg.Configuration;
  */
 public class Main extends Application {
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("main.fxml"));
-        Parent root = loader.load();
-        Controller controller = loader.getController();
-        controller.init(primaryStage);
-
-        Scene scene = new Scene(root);
-
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Demo MPS");
+    public void start(Stage primaryStage) throws Exception{
+        Parent root = FXMLLoader.load(getClass().getResource("/MainFrm.fxml"));
+        primaryStage.setTitle("Hello World");
+        primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();
 
+        TableName table = new TableName();
+        table.setName("testTable");
+
+        SessionFactory sessionFactory=buildSessionFactory(TableName.class);
+        Session session = sessionFactory.openSession();
+        session.save(table);
+        TableName savedTable = session.get(TableName.class, 1);
+
+        System.out.println(savedTable.getName());
     }
 
     public static SessionFactory buildSessionFactory(Class clazz){
@@ -41,15 +42,7 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
 
-        TableName table = new TableName();
-        table.setName("testTable");
 
-        SessionFactory sessionFactory=buildSessionFactory(TableName.class);
-        Session session = sessionFactory.openSession();
-        session.save(table);
-        TableName savedTable = session.get(TableName.class, 1);
-
-        System.out.println(savedTable.getName());
     }
 
 }
