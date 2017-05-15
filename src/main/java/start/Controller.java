@@ -33,13 +33,15 @@ public class Controller implements Initializable{
         File selectFile = fileChooser.showOpenDialog(null);
         if (selectFile !=null){
             fldFileName.setText(selectFile.getName().replaceFirst("[.][^.]+$", ""));
+            CSVParser csv = new CSVParser();
+            csv.setCsvFile(selectFile.getAbsolutePath());
+            csv.Parse();
+            System.out.println(csv.toString());
         }
 
-        CSVParser csv = new CSVParser();
-        csv.setCsvFile(selectFile.getAbsolutePath());
-        csv.Parse();
 
-        System.out.println(csv.getBr());
+
+        //System.out.println(csv.getBr());
     }
     public void OnSave(){
         System.out.println("save...");

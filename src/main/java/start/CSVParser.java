@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * Created by Vitalii on 12.05.2017.
@@ -14,9 +15,21 @@ public class CSVParser {
     private BufferedReader br = null;
     private String line = "";
     private String cvsSplitBy = ",";
+    private String[] massCSV;
 
     public void setCsvFile(String csvFile){
         this.csvFile = csvFile;
+    }
+
+    @Override
+    public String toString() {
+        return "CSVParser{" +
+                "massCSV=" + Arrays.toString(massCSV) +
+                '}';
+    }
+
+    public String[] getMassCSV() {
+        return massCSV;
     }
 
     public BufferedReader getBr() {
@@ -35,10 +48,7 @@ public class CSVParser {
             while ((line = br.readLine()) != null) {
 
                 // use comma as separator
-                String[] country = line.split(cvsSplitBy);
-
-                System.out.println("Country [code= " + country[4] + " , name=" + country[5] + "]");
-
+                massCSV = line.split(cvsSplitBy);
             }
 
         } catch (FileNotFoundException e) {
